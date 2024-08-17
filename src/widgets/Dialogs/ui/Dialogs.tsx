@@ -35,7 +35,7 @@ interface DialogsProps {
   className?: string;
 }
 
-export const Dialogs: FC<DialogsProps> = (props) => {
+export const Dialogs: FC<DialogsProps> = async (props) => {
   const {
     className,
   } = props;

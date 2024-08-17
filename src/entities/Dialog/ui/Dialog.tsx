@@ -1,17 +1,9 @@
 import { UserIcon } from "@/shared/ui/UserIcon";
 import Link from "next/link";
 import { FC } from "react";
+import type { DialogComponentProps } from "../model/types";
 
-interface DialogProps {
-  userId: string;
-  userName: string;
-  userEmojiAvatar: string;
-  lastMessage: string;
-  lastMessageTime: string;
-  countUnreadMessages: number;
-}
-
-export const Dialog: FC<DialogProps> = (props) => {
+export const Dialog: FC<DialogComponentProps> = (props) => {
   const {
     countUnreadMessages,
     lastMessage,

@@ -3,6 +3,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import { Dialogs } from "@/widgets/Dialogs";
 import { Chat } from "@/widgets/Chat";
+import ReactQueryProvider from "@/_app/providers/ReactQueryProvider";
 
 const inter = Roboto({ subsets: ["cyrillic"], weight: ['300', '400', '500', '700'] });
 
@@ -19,15 +20,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-      <div className="flex">
-        <div className="w-80">
-          <Dialogs className="h-screen overflow-x-auto" />
-        </div>
-        
-        <div className="w-full">
-          <Chat className="h-screen overflow-x-auto" />
-        </div>
-      </div>
+        <ReactQueryProvider>
+          <div className="flex">
+            <div className="min-w-64 max-w-64">
+              <Dialogs className="h-screen overflow-x-auto" />
+            </div>
+            
+            <div className="w-full">
+              <Chat className="h-screen overflow-x-auto" />
+            </div>
+          </div>
+          {/* {children} */}
+        </ReactQueryProvider>
       </body>
     </html>
   );

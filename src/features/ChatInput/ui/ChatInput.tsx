@@ -51,6 +51,7 @@ export const ChatInput: FC<ChatInputProps> = ({ className }) => {
       onBlur={onBlur}
       value={value}
       onChange={onChange}
+      style={{ width: 'calc(100% - (256px + 16px + 16px))' }}
     />
   );
 };
