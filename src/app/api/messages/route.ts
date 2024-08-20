@@ -1,48 +1,95 @@
-import { NextRequest, NextResponse } from "next/server";
+import { getTokenPayload } from "@/shared/helpers/getTokenPayload/getTokenPayload";
+import { headers } from "next/headers";
+import { NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/db";
-import { jwtDecode } from "jwt-decode";
 
-interface Res {
-  message: string;
-}
-
-const getSome = (userId: string) => {
-  return prisma.message.findMany({
-    where: {
-      OR: [
-        {
-          from: Number(userId),
-        },
-      ]
-    },
-    include: {
-      fromUserId: true,
+export async function POST(req: Request) {
+  try {
+    const headersList = headers();
+    const token = headersList.get('token');
+    const body = await req.json() as unknown;
+    
+    if (typeof token !== 'string') {
+      throw new Error('Something went wrong!');
     }
-  })
-}
 
-export type MessagesGetRouteReturnType = Awaited<ReturnType<typeof getSome>>
+    const tokenPayload = getTokenPayload(token);
+    
+    if (typeof tokenPayload === 'string') {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
 
-export async function GET(req: NextRequest, res: NextResponse<Res>) {
-  // const token = req.headers.get('token');
+    if (
+      body
+      && typeof body === 'object'
+      && 'text' in body
+      && 'chatId' in body
+      && typeof body.text === 'string'
+      && typeof body.chatId === 'number'
+    ) {
 
-  // if (!token) {
-  //   return new Response('Hello, Next.js!', {
-  //     status: 401,
-  //     statusText: 'Unauthorised'
-  //   });
-  // }
+      const newMessage = await prisma.message.create({
+        data: {
+          isReaded: false,
+          text: body.text,
+          chatId: Number(body.chatId),
+          from: Number(tokenPayload?.sub || 0),
+        }
+      });
+  
+      return NextResponse.json({ newMessage }, { status: 200 });
+    }
 
-  // const { sub: userId } = jwtDecode(token.split(' ')[1]);
+    if (
+      body
+      && typeof body === 'object'
+      && 'text' in body
+      && 'toUserId' in body
+      && typeof body.text === 'string'
+      && typeof body.toUserId === 'number'
+    ) {
+      const chat = await prisma.chat.findMany({
+        where: {
+          users: {
+            every: {
+              id: {
+                in: [body.toUserId, Number(tokenPayload?.sub || 0)]
+              }
+            }
+          },
+        },
+      });
 
-  // if (!userId) {
-  //   return new Response('Hello, Next.js!', {
-  //     status: 404,
-  //     statusText: 'Not found'
-  //   });
-  // }
+      if (chat.length) {
+        return NextResponse.json(null, { status: 400, statusText: 'Bad Request' });
+      }
 
-  // const result = await getSome(userId);
+      const newChat = await prisma.chat.create({
+        data: {
+          users: {
+            connect: [
+              { id: body.toUserId },
+              { id: Number(tokenPayload?.sub || 0) }
+            ],
+          },
+        },
+      });
 
-  return NextResponse.json([123]);
+      const newMessage = await prisma.message.create({
+        data: {
+          isReaded: false,
+          text: body.text,
+          chatId: newChat.id,
+          from: Number(tokenPayload?.sub || 0),
+        }
+      });
+  
+      return NextResponse.json({ newMessage }, { status: 200 });
+    }
+
+    return NextResponse.json(null, { status: 400, statusText: 'Bad Request' });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
 }
