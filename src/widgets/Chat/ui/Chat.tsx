@@ -4,10 +4,11 @@ import { ComponentProps, FC } from "react";
 import { Message } from "@/entities/Message";
 import classNames from "classnames";
 import { ChatInput } from "@/features/ChatInput";
+import { useMessages } from "@/entities/Message/hooks/useMessages";
 
 type MessageProps = ComponentProps<typeof Message>;
 
-const messages: MessageProps[] = [
+const mookMessages: MessageProps[] = [
   {
     text: 'text',
     time: '12:00',
@@ -240,28 +241,41 @@ const messages: MessageProps[] = [
 
 interface ChatProps {
   className?: string;
+  chatId: string,
 }
 
 export const Chat: FC<ChatProps> = (props) => {
   const {
     className,
+    chatId,
   } = props;
+
+  const { data, isLoading } = useMessages({ chatId });
+  
+  if (isLoading || !data) {
+    return null;
+  }
+
 
   return (
     <div className={classNames("bg-COLOR_5 pl-4 pr-4", className)}>
       <div>
-        {messages.map(({
-          isMine, status, text, time,
-        }, i) => (
-          <div className={`flex pt-1 ${isMine ? 'justify-end' : 'justify-start'}`} key={i}>
-            <Message
-              isMine={isMine}
-              status={status}
-              text={text}
-              time={time}
-            />
-          </div>
-        ))}
+        {data.messages.map(({
+          text, isReaded, from
+        }, i) => {
+          const isMine = data.users[0].id !== from;
+
+          return (
+            <div className={`flex pt-1 ${isMine ? 'justify-end' : 'justify-start'}`} key={i}>
+              <Message
+                isMine={isMine}
+                status={isReaded ? 'readed' : 'delivered'}
+                text={text}
+                time={'12:00'}
+              />
+            </div>
+          )
+        })}
       </div>
 
       <div className="relative">

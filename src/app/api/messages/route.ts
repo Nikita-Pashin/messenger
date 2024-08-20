@@ -27,8 +27,7 @@ export async function POST(req: Request) {
       && typeof body.text === 'string'
       && typeof body.chatId === 'number'
     ) {
-
-      const newMessage = await prisma.message.create({
+      const newMessage: ApiPostMessage = await prisma.message.create({
         data: {
           isReaded: false,
           text: body.text,
@@ -75,7 +74,7 @@ export async function POST(req: Request) {
         },
       });
 
-      const newMessage = await prisma.message.create({
+      const newMessage: ApiPostMessage = await prisma.message.create({
         data: {
           isReaded: false,
           text: body.text,

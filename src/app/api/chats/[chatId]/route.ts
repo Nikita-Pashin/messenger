@@ -4,6 +4,33 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/db";
 
+const getChat = (chatId: number, userId: number) => {
+  return prisma.chat.findFirst({
+    where: {
+      users: {
+        every: {
+          id: {
+            in: [chatId, userId]
+          }
+        }
+      },
+    },
+    include: {
+      users: {
+        where: {
+          id: {
+            not: userId,
+          },
+        },
+        take: 1,
+      },
+      messages: {},
+    }
+  })
+}
+
+export type ApiGetChat = Awaited<ReturnType<typeof getChat>>
+
 export async function GET(req: NextApiRequest, { params }: { params: unknown }) {
   try {
     const headersList = headers()
@@ -23,15 +50,11 @@ export async function GET(req: NextApiRequest, { params }: { params: unknown }) 
       params
       && typeof params === 'object'
       && 'chatId' in params
-      && typeof params.chatId === 'number'
+      && typeof params.chatId === 'string'
     ) {
-      const chat = await prisma.chat.findFirst({
-        where: {
-          id: params.chatId
-        },
-      });
+      const chat = await getChat(Number(params.chatId), Number(tokenPayload?.sub || 0));
   
-      return NextResponse.json({ chat }, { status: 200 });
+      return NextResponse.json(chat, { status: 200 });
     }
     
     return NextResponse.json(null, { status: 400, statusText: 'Bad Request'});

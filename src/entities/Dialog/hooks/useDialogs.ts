@@ -1,8 +1,8 @@
+import { ApiGetChats } from "@/app/api/chats/route";
 import { useQuery } from "@tanstack/react-query";
-import { MessagesGetRouteReturnType } from "@/app/api/messages/route";
 
-const getData = (): Promise<MessagesGetRouteReturnType> => {
-  return fetch('/api/chats', {
+const getData = (): Promise<ApiGetChats> => {
+  return fetch('/api/chats/', {
     headers: {
       token: localStorage.getItem('token') || '',
     },
@@ -23,7 +23,7 @@ export const useDialogs = (args?: useDialogsParams) => {
 
   const query = useQuery({
     initialData: [],
-    queryKey: ['dialog'],
+    queryKey: ['chats'],
     queryFn: getData,
     enabled: isEnabled,
   });

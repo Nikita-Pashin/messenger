@@ -26,11 +26,8 @@ export default function RootLayout({
               <Dialogs className="h-screen overflow-x-auto" />
             </div>
             
-            <div className="w-full">
-              <Chat className="h-screen overflow-x-auto" />
-            </div>
+            {children}
           </div>
-          {/* {children} */}
         </ReactQueryProvider>
       </body>
     </html>

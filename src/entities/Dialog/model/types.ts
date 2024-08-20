@@ -1,3 +1,5 @@
+import { ApiGetChats } from "@/app/api/chats/route";
+
 export interface DialogComponentProps {
   userId: string;
   userName: string;
@@ -7,6 +9,8 @@ export interface DialogComponentProps {
   countUnreadMessages: number;
 }
 
-export interface UseDialogs {
-  
-}
+// type useDialogsParams = {
+//   isEnabled?: boolean;
+// };
+
+// export type UseDialogs = (args?: useDialogsParams) => ApiGetChats;
