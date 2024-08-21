@@ -28,6 +28,7 @@ export const useMessages = (args: useMessagesParams) => {
     queryKey: ['chat'],
     queryFn: () => getData(chatId),
     enabled: isEnabled,
+    refetchInterval: 1000,
   });
 
   return query;

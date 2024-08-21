@@ -279,7 +279,7 @@ export const Chat: FC<ChatProps> = (props) => {
       </div>
 
       <div className="relative">
-        <ChatInput className="fixed w-80 bottom-4 right-4" />
+        <ChatInput chatId={chatId} className="fixed w-80 bottom-4 right-4" />
       </div>
     </div>
   );

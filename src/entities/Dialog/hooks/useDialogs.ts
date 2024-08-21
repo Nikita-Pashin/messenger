@@ -26,6 +26,7 @@ export const useDialogs = (args?: useDialogsParams) => {
     queryKey: ['chats'],
     queryFn: getData,
     enabled: isEnabled,
+    refetchInterval: 1000,
   });
 
   return query;

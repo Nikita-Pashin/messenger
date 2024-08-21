@@ -1,20 +1,38 @@
 'use client'
 
+import { useDialogs } from "@/entities/Dialog";
+import { useMessages } from "@/entities/Message/hooks/useMessages";
+import { useSendMessages } from "@/entities/Message/hooks/useSendMessages";
 import classNames from "classnames";
 import { FC, useEffect, useState } from "react";
 
 interface ChatInputProps {
   className?: string;
+  chatId: string,
 }
 
-export const ChatInput: FC<ChatInputProps> = ({ className }) => {
+export const ChatInput: FC<ChatInputProps> = ({ className, chatId }) => {
   const [isFocus, setIsFocus] = useState(false);
   const [value, setValue] = useState('');
 
-  const sendMessage = () => {
+  const { refetch: refetchMessages } = useMessages({ chatId });
+  const { refetch: refetchDialogs } = useDialogs();
+
+  const { mutate, isPending } = useSendMessages();
+
+  const sendMessage = (text: string) => {
+    mutate({ text, chatId: Number(chatId) });
     setValue('');
-    console.log('sendMessage');
   }
+
+  useEffect(() => {
+    if (isPending) {
+      return;
+    }
+
+    refetchMessages();
+    refetchDialogs();
+  }, [isPending])
 
   const onChange = ({ currentTarget: { value } }: React.FormEvent<HTMLInputElement>) => {
     setValue(value);
@@ -30,9 +48,8 @@ export const ChatInput: FC<ChatInputProps> = ({ className }) => {
 
   useEffect(() => {
     const onKeyDown = ({ key }: KeyboardEvent) => {
-      console.log(key, isFocus)
       if (key === 'Enter' && isFocus) {
-        sendMessage();
+        sendMessage(value);
       }
     }
 
@@ -41,7 +58,7 @@ export const ChatInput: FC<ChatInputProps> = ({ className }) => {
     return () => {
       window.removeEventListener('keydown', onKeyDown);
     }
-  }, [isFocus]);
+  }, [isFocus, value]);
 
   return (
     <input

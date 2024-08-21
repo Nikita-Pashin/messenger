@@ -7,13 +7,7 @@ import { prisma } from "../../../../../prisma/db";
 const getChat = (chatId: number, userId: number) => {
   return prisma.chat.findFirst({
     where: {
-      users: {
-        every: {
-          id: {
-            in: [chatId, userId]
-          }
-        }
-      },
+      id: chatId,
     },
     include: {
       users: {
