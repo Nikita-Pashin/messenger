@@ -25,6 +25,7 @@ export const useMessages = (args: useMessagesParams) => {
   } = args;
 
   const query = useQuery({
+    initialData: null,
     queryKey: ['chat'],
     queryFn: () => getData(chatId),
     enabled: isEnabled,

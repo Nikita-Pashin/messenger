@@ -251,6 +251,8 @@ export const Chat: FC<ChatProps> = (props) => {
   } = props;
 
   const { data, isLoading } = useMessages({ chatId });
+
+  console.log('data', data)
   
   if (isLoading || !data) {
     return null;

@@ -48,7 +48,7 @@ export const Dialogs: FC<DialogsProps> = (props) => {
   return (
     <div className={classNames("bg-COLOR_1 pt-2 pb-2 pl-2", className)}>
       {dialogs.map(({
-        messages, users: [{ id, fullName }], 
+        messages, users: [{ fullName }], id,
       }, i) => {
         const currentMessage = messages.at(-1);
         const countUnreadMessages = messages.filter((el) => !el.isReaded).length;
