@@ -1,7 +1,6 @@
 import { getTokenPayload } from "@/shared/helpers/getTokenPayload/getTokenPayload";
-import { NextApiRequest, NextApiResponse } from "next";
 import { headers } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../../prisma/db";
 
 const getChat = (chatId: number, userId: number) => {
@@ -25,7 +24,7 @@ const getChat = (chatId: number, userId: number) => {
 
 export type ApiGetChat = Awaited<ReturnType<typeof getChat>>
 
-export async function GET(req: NextApiRequest, { params }: { params: unknown }) {
+export async function GET(req: NextRequest, { params }: { params: unknown }) {
   try {
     const headersList = headers()
     const token = headersList.get('token')
