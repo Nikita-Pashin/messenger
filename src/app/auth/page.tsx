@@ -15,7 +15,7 @@ export default function Auth() {
   };
 
   const onClick = () => {
-    fetch('http://localhost:3000/api/auth/login', {
+    fetch('api/auth/login', {
       method: 'POST',
       body: JSON.stringify({ login: 'Nick2', password: 'root2' }),
       headers: {
