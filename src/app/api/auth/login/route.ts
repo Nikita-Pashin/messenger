@@ -37,5 +37,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     access_token: await jwt.sign(payload, 'secret'),
   };
 
-  return NextResponse.json(result);
+  return NextResponse.json(null, {
+    headers: { "Set-Cookie": `access_token=Bearer ${result.access_token}; Secure; HttpOnly; SameSite=None; Path=/; Max-Age=99999999;` }
+  });
 }
