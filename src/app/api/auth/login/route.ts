@@ -34,7 +34,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   const payload = { sub: user.id, username: user.fullName };
 
   const result = {
-    access_token: await jwt.sign(payload, 'secret'),
+    access_token: await jwt.sign(payload, 'secret', { expiresIn: '10m' }),
   };
 
   return NextResponse.json(null, {

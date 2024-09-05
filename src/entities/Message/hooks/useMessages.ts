@@ -1,5 +1,4 @@
-import { ApiGetChat } from "@/app/api/chats/[chatId]/route";
-import { ApiGetChats } from "@/app/api/chats/route";
+import type { ApiGetChat } from "@/app/api/chats/[chatId]/route";
 import { useQuery } from "@tanstack/react-query";
 
 const getData = (chatId: string): Promise<ApiGetChat> => {
@@ -7,6 +6,7 @@ const getData = (chatId: string): Promise<ApiGetChat> => {
     headers: {
       token: localStorage.getItem('token') || '',
     },
+    credentials: 'include',
   })
     .then((response) => {
       return response.json();

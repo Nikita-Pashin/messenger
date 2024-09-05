@@ -1,10 +1,14 @@
 'use client';
 
-import { ChangeEvent, useState } from "react";
+import { login } from "@/features/Auth/model/login";
+import { redirect } from "next/navigation";
+import { ChangeEvent, useEffect, useState } from "react";
 
 export default function Auth() {
-  const [valueLogin, setValueLogin] = useState('');
-  const [valuePassword, setValuePassword] = useState('');
+  const [valueLogin, setValueLogin] = useState('Nick2');
+  const [valuePassword, setValuePassword] = useState('root2');
+
+  const { mutate, mutateAsync, isSuccess } = login();
 
   const onChangeLogin = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
     setValueLogin(value);
@@ -15,14 +19,14 @@ export default function Auth() {
   };
 
   const onClick = () => {
-    fetch('api/auth/login', {
-      method: 'POST',
-      body: JSON.stringify({ login: 'Nick2', password: 'root2' }),
-      headers: {
-        'content-type': 'application/json',
-      }
-    })
+    mutate({ login: valueLogin, password: valuePassword });
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      redirect('/')
+    }
+  }, [isSuccess]);
 
   return (
     <div>

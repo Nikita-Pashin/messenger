@@ -1,3 +1,4 @@
+import { makeRequest } from "@/shared/api/makeRequest";
 import { useMutation } from "@tanstack/react-query";
 
 interface Body {
@@ -5,18 +6,11 @@ interface Body {
   chatId: number,
 }
 
-const postData = (body: Body) => {
-  return fetch(`/api/messages/`, {
-    headers: {
-      token: localStorage.getItem('token') || '',
-    },
-    method: 'POST',
-    body: JSON.stringify(body),
-  })
-    .then((response) => {
-      return response.json();
-    })
-}
+const postData = (body: Body) => makeRequest({
+  url: '/api/messages/',
+  body,
+  method: 'POST',
+});
 
 export const useSendMessages = () => {
   const mutation = useMutation({

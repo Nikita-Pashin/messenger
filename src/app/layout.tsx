@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "./globals.css";
-import { Dialogs } from "@/widgets/Dialogs";
-import { Chat } from "@/widgets/Chat";
 import ReactQueryProvider from "@/_app/providers/ReactQueryProvider";
-import { redirect } from "next/navigation";
 
 const inter = Roboto({ subsets: ["cyrillic"], weight: ['300', '400', '500', '700'] });
 
@@ -18,18 +15,11 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
-  // if (1) {
-  //   redirect('/auth');
-  // }
-
   return (
     <html lang="en">
       <body className={inter.className}>
         <ReactQueryProvider>
-          <div className="flex">
-            {children}
-          </div>
+          {children}
         </ReactQueryProvider>
       </body>
     </html>

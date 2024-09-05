@@ -1,22 +1,27 @@
 import { getTokenPayload } from "@/shared/helpers/getTokenPayload/getTokenPayload";
-import { headers } from "next/headers";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "../../../../prisma/db";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const headersList = headers();
-    const token = headersList.get('token');
+    const { cookies } = req;
+    const accessToken = cookies.get('access_token');
     const body = await req.json() as unknown;
-    
-    if (typeof token !== 'string') {
+
+    if (!accessToken || !('value' in accessToken) || typeof accessToken.value !== 'string') {
       throw new Error('Something went wrong!');
     }
 
-    const tokenPayload = getTokenPayload(token);
+    const token = accessToken.value;
+    let tokenPayload;
     
-    if (typeof tokenPayload === 'string') {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    try {
+      tokenPayload = getTokenPayload(token);
+    } catch (e) {
+      return NextResponse.json({ error: 'Unauthorized' }, {
+        status: 401,
+        headers: { "Set-Cookie": `access_token=null; Secure; HttpOnly; SameSite=None; Path=/; Max-Age=0;` }
+      });
     }
 
     if (

@@ -1,248 +1,17 @@
 'use client';
 
-import { ComponentProps, FC } from "react";
+import { FC, useMemo, useRef } from "react";
 import { Message } from "@/entities/Message";
 import classNames from "classnames";
 import { ChatInput } from "@/features/ChatInput";
 import { useMessages } from "@/entities/Message/hooks/useMessages";
 
-type MessageProps = ComponentProps<typeof Message>;
-
-const mookMessages: MessageProps[] = [
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'pending',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'delivered',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'delivered',
-    isMine: false,
-  },
-  {
-    text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.',
-    time: '12:00',
-    status: 'delivered',
-    isMine: false,
-  },
-  {
-    text: 'Lorem Ipsum - это текст-"рыба", часто используемый в печати и вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для текстов на латинице с начала XVI века. В то время некий безымянный печатник создал большую коллекцию размеров и форм шрифтов, используя Lorem Ipsum для распечатки образцов. Lorem Ipsum не только успешно пережил без заметных изменений пять веков, но и перешагнул в электронный дизайн. Его популяризации в новое время послужили публикация листов Letraset с образцами Lorem Ipsum в 60-х годах и, в более недавнее время, программы электронной вёрстки типа Aldus PageMaker, в шаблонах которых используется Lorem Ipsum.',
-    time: '12:00',
-    status: 'delivered',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-  {
-    text: 'text',
-    time: '12:00',
-    status: 'readed',
-    isMine: true,
-  },
-];
-
 interface ChatProps {
   className?: string;
   chatId: string,
 }
+
+type UserType = NonNullable<ReturnType<typeof useMessages>['data']>['users'][0];
 
 export const Chat: FC<ChatProps> = (props) => {
   const {
@@ -251,13 +20,33 @@ export const Chat: FC<ChatProps> = (props) => {
   } = props;
 
   const { data, isLoading } = useMessages({ chatId });
+  const chatRef = useRef<HTMLDivElement | null>(null);
 
-  console.log('data', data)
+  const scrollToLastMessage = (element: HTMLDivElement | null) => {
+    if (element) {
+      element.scrollIntoView({ behavior: 'instant' });
+    }
+  };
+
+  const onSendMessage = () => {
+    scrollToLastMessage(chatRef.current);
+  };
+
+  const usersMap = useMemo(() => {
+    const obj: Record<PropertyKey, UserType> = {};
+
+    if (data) {
+      for (const user of data?.users) {
+        obj[user.id] = user;
+      }
+    }
+
+    return obj;
+  }, [data?.users]);
   
   if (isLoading || !data) {
     return null;
   }
-
 
   return (
     <div className={classNames("bg-COLOR_5 pl-4 pr-4", className)}>
@@ -265,7 +54,12 @@ export const Chat: FC<ChatProps> = (props) => {
         {data.messages.map(({
           text, isReaded, from
         }, i) => {
-          const isMine = data.users[0].id !== from;
+          const currentUser = usersMap[from];
+          const isMine = data.users[0].id === from;
+          // debugger;
+          // console.log('usersMap', usersMap);
+          // console.log('usersMap[from]', usersMap[from]);
+          // console.log('isMine', isMine);
 
           return (
             <div className={`flex pt-1 ${isMine ? 'justify-end' : 'justify-start'}`} key={i}>
@@ -274,14 +68,21 @@ export const Chat: FC<ChatProps> = (props) => {
                 status={isReaded ? 'readed' : 'delivered'}
                 text={text}
                 time={'12:00'}
+                userName={currentUser.fullName}
+                userEmojiAvatar={currentUser.avatarEmoji}
               />
             </div>
           )
         })}
+
+        <div ref={(e) => {
+          chatRef.current = e;
+          scrollToLastMessage(e);
+        }} />
       </div>
 
       <div className="relative">
-        <ChatInput chatId={chatId} className="fixed w-80 bottom-4 right-4" />
+        <ChatInput onSendMessage={onSendMessage} chatId={chatId} className="fixed w-80 bottom-4 right-4" />
       </div>
     </div>
   );
