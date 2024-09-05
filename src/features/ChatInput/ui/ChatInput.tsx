@@ -17,9 +17,11 @@ export const ChatInput: FC<ChatInputProps> = ({ className, chatId, onSendMessage
   const { mutate, isPending } = useSendMessages();
 
   const sendMessage = (text: string) => {
-    mutate({ text, chatId: Number(chatId) });
-    setValue('');
-    onSendMessage?.();
+    if (value !== '') {
+      mutate({ text, chatId: Number(chatId) });
+      setValue('');
+      onSendMessage?.();
+    }
   };
 
   useEffect(() => {

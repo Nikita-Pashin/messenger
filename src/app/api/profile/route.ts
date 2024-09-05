@@ -1,35 +1,5 @@
 import { getTokenPayload } from "@/shared/helpers/getTokenPayload/getTokenPayload";
-import { prisma } from "../../../../prisma/db";
 import { NextRequest, NextResponse } from "next/server";
-
-const getChats = (userId: number) => {
-  return prisma.chat.findMany({
-    where: {
-      users: {
-        some: {
-          id: userId,
-        },
-      },
-    },
-    include: {
-      users: {
-        where: {
-          id: {
-            not: userId,
-          },
-        },
-        take: 1,
-      },
-      messages: {
-        orderBy: {
-          createdAt: 'asc',
-        },
-      }
-    },
-  })
-}
-
-export type ApiGetChats = Awaited<ReturnType<typeof getChats>>;
 
 export async function GET(req: NextRequest) {
   try {
@@ -56,10 +26,8 @@ export async function GET(req: NextRequest) {
     if (typeof tokenPayload === 'string') {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
-    
-    const chats: ApiGetChats = await getChats(Number(tokenPayload.id));
 
-    return NextResponse.json(chats, { status: 200 });
+    return NextResponse.json(tokenPayload, { status: 200 });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });

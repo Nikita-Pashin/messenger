@@ -29,9 +29,21 @@ export async function POST(req: NextRequest, res: NextResponse) {
       status: 401,
       statusText: 'Unauthorised'
     })
-  }
+  };
 
-  const payload = { sub: user.id, username: user.fullName };
+  const {
+    avatarEmoji,
+    fullName,
+    id,
+    login,
+  } = user;
+
+  const payload = {
+    avatarEmoji,
+    fullName,
+    id,
+    login,
+  };
 
   const result = {
     access_token: await jwt.sign(payload, 'secret', { expiresIn: '10m' }),

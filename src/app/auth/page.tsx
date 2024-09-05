@@ -8,7 +8,7 @@ export default function Auth() {
   const [valueLogin, setValueLogin] = useState('Nick2');
   const [valuePassword, setValuePassword] = useState('root2');
 
-  const { mutate, mutateAsync, isSuccess } = login();
+  const { mutate, isSuccess } = login();
 
   const onChangeLogin = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
     setValueLogin(value);

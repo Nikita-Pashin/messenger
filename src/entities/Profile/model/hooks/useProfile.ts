@@ -1,25 +1,30 @@
-import type { ApiGetChats } from "@/app/api/chats/route";
 import { makeRequest } from "@/shared/api/makeRequest";
 import { useQuery } from "@tanstack/react-query";
 
-type useDialogsParams = {
+type useProfileParams = {
   isEnabled?: boolean;
 };
 
-const getData = (): Promise<ApiGetChats> => makeRequest<ApiGetChats>({
-  url: '/api/chats',
+interface Response {
+  id: number;
+  fullname: string;
+  avatarEmoji: string;
+  login: string;
+}
+
+const getData = () => makeRequest<Response>({
+  url: '/api/profile',
   withcCredentials: true,
 });
 
-export const useDialogs = (args?: useDialogsParams) => {
+export const useProfile = (args?: useProfileParams) => {
   const {
     isEnabled = true,
   } = args || {};
 
   return useQuery({
-    queryKey: ['chats'],
+    queryKey: ['profile'],
     queryFn: getData,
     enabled: isEnabled,
-    refetchInterval: 1000,
   });
 };

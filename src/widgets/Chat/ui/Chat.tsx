@@ -5,6 +5,7 @@ import { Message } from "@/entities/Message";
 import classNames from "classnames";
 import { ChatInput } from "@/features/ChatInput";
 import { useMessages } from "@/entities/Message/hooks/useMessages";
+import { useProfile } from "@/entities/Profile";
 
 interface ChatProps {
   className?: string;
@@ -20,6 +21,7 @@ export const Chat: FC<ChatProps> = (props) => {
   } = props;
 
   const { data, isLoading } = useMessages({ chatId });
+  const profile = useProfile();
   const chatRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToLastMessage = (element: HTMLDivElement | null) => {
@@ -44,8 +46,10 @@ export const Chat: FC<ChatProps> = (props) => {
     return obj;
   }, [data?.users]);
   
-  if (isLoading || !data) {
-    return null;
+  if (isLoading || !data || profile.isLoading || !profile.data) {
+    return (
+      <div>Loading...</div>
+    );
   }
 
   return (
@@ -55,11 +59,7 @@ export const Chat: FC<ChatProps> = (props) => {
           text, isReaded, from
         }, i) => {
           const currentUser = usersMap[from];
-          const isMine = data.users[0].id === from;
-          // debugger;
-          // console.log('usersMap', usersMap);
-          // console.log('usersMap[from]', usersMap[from]);
-          // console.log('isMine', isMine);
+          const isMine = profile.data.id === from;
 
           return (
             <div className={`flex pt-1 ${isMine ? 'justify-end' : 'justify-start'}`} key={i}>

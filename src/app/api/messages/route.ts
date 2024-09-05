@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     let tokenPayload;
     
     try {
-      tokenPayload = getTokenPayload(token);
+      tokenPayload = getTokenPayload(token) as { id: number };
     } catch (e) {
       return NextResponse.json({ error: 'Unauthorized' }, {
         status: 401,
@@ -31,13 +31,14 @@ export async function POST(req: NextRequest) {
       && 'chatId' in body
       && typeof body.text === 'string'
       && typeof body.chatId === 'number'
+      && body.text !== ''
     ) {
       const newMessage: ApiPostMessage = await prisma.message.create({
         data: {
           isReaded: false,
           text: body.text,
           chatId: Number(body.chatId),
-          from: Number(tokenPayload?.sub || 0),
+          from: Number(tokenPayload?.id || 0),
         }
       });
   
@@ -51,13 +52,14 @@ export async function POST(req: NextRequest) {
       && 'toUserId' in body
       && typeof body.text === 'string'
       && typeof body.toUserId === 'number'
+      && body.text !== ''
     ) {
       const chat = await prisma.chat.findMany({
         where: {
           users: {
             every: {
               id: {
-                in: [body.toUserId, Number(tokenPayload?.sub || 0)]
+                in: [body.toUserId, Number(tokenPayload?.id || 0)]
               }
             }
           },
@@ -73,7 +75,7 @@ export async function POST(req: NextRequest) {
           users: {
             connect: [
               { id: body.toUserId },
-              { id: Number(tokenPayload?.sub || 0) }
+              { id: Number(tokenPayload?.id || 0) }
             ],
           },
         },
@@ -84,7 +86,7 @@ export async function POST(req: NextRequest) {
           isReaded: false,
           text: body.text,
           chatId: newChat.id,
-          from: Number(tokenPayload?.sub || 0),
+          from: Number(tokenPayload?.id || 0),
         }
       });
   
