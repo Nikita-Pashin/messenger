@@ -1,4 +1,5 @@
-export const getCookieByName = (name: string) => {
+function func(name: 'theme'): 'dark' | 'light' | null;
+function func(name: string): string | null {
   const regex = new RegExp(`(^| )${name}=([^;]+)`);
   const match = document.cookie.match(regex);
 
@@ -8,3 +9,5 @@ export const getCookieByName = (name: string) => {
 
   return null;
 }
+
+export const getCookieByName = func; 

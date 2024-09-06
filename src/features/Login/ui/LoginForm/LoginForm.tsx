@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
 import { login } from "../../model/login";
+import s from './LoginForm.module.scss';
 
 export const LoginForm = () => {
   const [valueLogin, setValueLogin] = useState('Nick2');

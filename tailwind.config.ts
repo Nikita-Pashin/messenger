@@ -12,13 +12,7 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
-    },
+    extend: {},
     colors: {
       'COLOR_1': '#212121',
       'COLOR_2': '#2c2c2c',
@@ -26,6 +20,7 @@ const config: Config = {
       'COLOR_4': '#686c72',
       'COLOR_5': '#111111',
       'COLOR_6': '#aaaaaa',
+      'COLOR_7': '#0F0F0F',
       transparent: 'transparent',
       current: 'currentColor',
       'white': '#ffffff',
