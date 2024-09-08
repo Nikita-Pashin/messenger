@@ -5,6 +5,10 @@ export function middleware(request: NextRequest) {
   const { cookies, url } = request;
   const access_token = cookies.get('access_token');
 
+  if (!access_token && url.includes('/auth/signup')) {
+    return NextResponse.next();
+  }
+
   if (!access_token && !url.includes('/auth')) {
     return NextResponse.redirect(new URL('/auth', request.url));
   }

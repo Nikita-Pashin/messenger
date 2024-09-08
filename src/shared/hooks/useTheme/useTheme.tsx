@@ -12,7 +12,7 @@ export const useTheme = (defaultTheme?: Theme) => {
   let currentDefaultTheme = defaultTheme || 'light';
 
   if (!isSSR) {
-    currentDefaultTheme = getCookieByName('theme') || currentDefaultTheme;
+    currentDefaultTheme = getCookieByName('theme') as Theme || currentDefaultTheme;
   }
 
   const [theme, setTheme] = useState<Theme>(currentDefaultTheme);

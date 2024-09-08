@@ -5,6 +5,7 @@ import "./globals.css";
 import ReactQueryProvider from "@/_app/providers/ReactQueryProvider";
 import { ThemeProvider } from "@/_app/providers/ThemeProvider";
 import { Theme } from "@/shared/hooks/useTheme/useTheme";
+import { CookiesProvider } from 'next-client-cookies/server';
 
 const inter = Roboto({ subsets: ["cyrillic"], weight: ['300', '400', '500', '700'] });
 
@@ -21,11 +22,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReactQueryProvider>
-          <ThemeProvider defaultTheme={cookies().get('theme')?.value as Theme || 'light'}>
-            {children}
-          </ThemeProvider>
-        </ReactQueryProvider>
+        <CookiesProvider>
+          <ReactQueryProvider>
+            <ThemeProvider defaultTheme={cookies().get('theme')?.value as Theme || 'light'}>
+              {children}
+            </ThemeProvider>
+          </ReactQueryProvider> 
+        </CookiesProvider>
       </body>
     </html>
   );
