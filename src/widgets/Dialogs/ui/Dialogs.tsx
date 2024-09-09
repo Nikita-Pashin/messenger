@@ -2,17 +2,20 @@
 
 import { ComponentProps, FC } from "react";
 import classNames from "classnames";
-import { Dialog, DialogSkeleton, useDialogs } from "@/entities/Dialog";
+import { Dialog, useDialogs } from "@/entities/Dialog";
+import { Dictionary } from "@/shared/i18n";
 
 type Dialog = ComponentProps<typeof Dialog>;
 
 interface DialogsProps {
   className?: string;
+  d: Dictionary,
 };
 
 export const Dialogs: FC<DialogsProps> = (props) => {
   const {
     className,
+    d,
   } = props;
 
   const { data: dialogs, isLoading } = useDialogs();
@@ -20,7 +23,11 @@ export const Dialogs: FC<DialogsProps> = (props) => {
   return (
     <div className={classNames("dark:bg-COLOR_1 bg-white pt-2 pb-2 pl-2", className)}>
       {isLoading && (
-        <div />
+        <div className="bold text-center text-xl text-black dark:text-white mt-2">{d['Dialogs.Loading chats']}...</div>
+      )}
+
+      {!isLoading && dialogs && !dialogs.length && (
+        <div className="bold text-center text-xl text-black dark:text-white mt-2">{d['Dialogs.Loading chats']}...</div>
       )}
 
       {!isLoading && dialogs && dialogs.map(({
