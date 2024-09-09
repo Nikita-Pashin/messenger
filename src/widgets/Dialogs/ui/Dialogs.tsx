@@ -1,14 +1,14 @@
 'use client'
 
-import { Dialog, useDialogs } from "@/entities/Dialog"
+import { ComponentProps, FC } from "react";
 import classNames from "classnames";
-import { ComponentProps, FC } from "react"
+import { Dialog, DialogSkeleton, useDialogs } from "@/entities/Dialog";
 
 type Dialog = ComponentProps<typeof Dialog>;
 
 interface DialogsProps {
   className?: string;
-}
+};
 
 export const Dialogs: FC<DialogsProps> = (props) => {
   const {
@@ -16,16 +16,14 @@ export const Dialogs: FC<DialogsProps> = (props) => {
   } = props;
 
   const { data: dialogs, isLoading } = useDialogs();
-  
-  if (isLoading || typeof dialogs === 'undefined') {
-    return (
-      <div>Loading...</div>
-    );
-  }
 
   return (
-    <div className={classNames("bg-COLOR_1 pt-2 pb-2 pl-2", className)}>
-      {dialogs.map(({
+    <div className={classNames("dark:bg-COLOR_1 bg-white pt-2 pb-2 pl-2", className)}>
+      {isLoading && (
+        <div />
+      )}
+
+      {!isLoading && dialogs && dialogs.map(({
         messages, users: [{ fullName }], id,
       }, i) => {
         const currentMessage = messages.at(-1);

@@ -1,9 +1,9 @@
-import Layout from './layout';
+import { DefaultBackground } from '@/shared/ui/DefaultBackground';
 
 export default function Home() {
   return (
-    <div>
-      home
-    </div>
+    <DefaultBackground>
+      <div className="h-screen" />
+    </DefaultBackground>
   );
 };

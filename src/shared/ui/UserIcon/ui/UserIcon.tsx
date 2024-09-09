@@ -1,23 +1,25 @@
 import { stringToHexColor } from "@/shared/helpers/stringToHexColor/stringToHexColor";
+import classNames from "classnames";
 import { FC } from "react";
 
 export interface UserIconProps {
   name: string,
   emojy?: string | null,
   size?: number;
+  className?: string;
 }
 
 export const UserIcon: FC<UserIconProps> = (props) => {
   const {
     emojy,
     name,
-    size = 14,
+    className,
   } = props;
 
   const hex = stringToHexColor(name)
 
   return (
-    <div className={`rounded-full h-${size} w-${size} flex justify-center items-center`} style={{ backgroundColor: hex }}>
+    <div className={classNames(className, 'rounded-full flex justify-center items-center')} style={{ backgroundColor: hex }}>
       {emojy ? (
         <span className="text-2xl">
           {emojy}

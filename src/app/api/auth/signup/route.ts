@@ -20,6 +20,19 @@ export async function POST(req: NextRequest, res: NextResponse) {
       password,
     } = data;
 
+    const user = await prisma.user.findUnique({
+      where: {
+        login
+      }
+    });
+
+    if (user) {
+      return new Response(JSON.stringify({ message: 'User already exists' }), {
+        status: 409,
+        statusText: 'HTTP 409 Conflict'
+      });
+    }
+
     const newUser = await prisma.user.create({
       data: {
         fullName: fullname,
@@ -28,7 +41,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
       },
     });
 
-    return new Response('Пользователь создан', {
+    return new Response(JSON.stringify(newUser), {
       status: 201,
       statusText: 'HTTP 201 Created'
     })
@@ -37,5 +50,5 @@ export async function POST(req: NextRequest, res: NextResponse) {
   return new Response('Некорректные данные', {
     status: 400,
     statusText: 'HTTP 400 Bad Request'
-  })
+  });
 }

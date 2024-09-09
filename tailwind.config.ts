@@ -28,6 +28,8 @@ const config: Config = {
       'COLOR_12': '#282828',
       'COLOR_13': '#a2acb4',
       'COLOR_14': '#5b5b5a',
+      'COLOR_15': '#e53935',
+      'COLOR_16': '#f4f4f5',
       transparent: 'transparent',
       current: 'currentColor',
       'white': '#ffffff',

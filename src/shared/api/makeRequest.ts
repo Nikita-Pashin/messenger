@@ -1,6 +1,3 @@
-import { redirect } from 'next/navigation';
-import { revalidatePath } from 'next/cache'
-
 interface MakeRequestConfig {
   url: string,
   withcCredentials?: RequestCredentials | true;
@@ -29,10 +26,16 @@ export const makeRequest = <T extends any>(config: MakeRequestConfig) => {
     return response.json() as T;
   })
   .catch((e: unknown): never => {
+    console.error(e);
+
     if (typeof e === 'object' && e && 'message' in e && e.message === 'Unauthorized') {
       window.location.reload();
     }
 
+    if (typeof e === 'object' && e && 'message' in e && typeof e.message === 'string') {
+      throw new Error(e.message);
+    }
+    
     throw new Error('Something went wrong');
   });
 

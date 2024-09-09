@@ -36,7 +36,7 @@ export const Input: FC<InputProps> = (props) => {
         disabled={disabled} 
         onBlur={() => setIsFocus(false)} 
         onFocus={() => setIsFocus(true)} 
-        className={classNames(s.input, 'bg-white dark:text-white dark:bg-COLOR_12 border-COLOR_9 hover:border-COLOR_8 focus:border-COLOR_8 dark:border-COLOR_14 dark:hover:border-COLOR_3 dark:focus:border-COLOR_3')} 
+        className={classNames(s.input, 'bg-white w-full dark:text-white dark:bg-COLOR_12 border-COLOR_9 hover:border-COLOR_8 focus:border-COLOR_8 dark:border-COLOR_14 dark:hover:border-COLOR_3 dark:focus:border-COLOR_3')} 
         value={value} onChange={onChange}
       />
     </div>

@@ -1,16 +1,16 @@
-import { Dialogs } from "@/widgets/Dialogs"
+import { Dialogs } from "@/widgets/Dialogs";
 
-export default function Layout({
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex w-full">
-      <div className="min-w-64 max-w-64">
+    <div className="flex">
+      <div className="basis-80">
         <Dialogs className="h-screen overflow-x-auto" />
       </div>
-      <div className="w-full">
+      <div className="flex-grow">
         {children}
       </div>
     </div>

@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
     if (!accessToken || !('value' in accessToken) || typeof accessToken.value !== 'string') {
       throw new Error('Something went wrong!');
     }
-
+    
     const token = accessToken.value;
     let tokenPayload;
     

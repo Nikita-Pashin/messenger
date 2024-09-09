@@ -6,7 +6,7 @@ export default function SignupPage() {
 
   return (
     <div className="flex justify-center pt-10">
-      <Signup d={d} />
+      <Signup d={d} className="w-72" />
     </div>
   );
 };

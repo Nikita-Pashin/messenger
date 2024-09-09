@@ -1,5 +1,5 @@
 import { ComponentProps } from 'react';
-import Link from "next/link"
+import Link from 'next/link'
 import { FC } from "react";
 import classNames from 'classnames';
 
@@ -12,6 +12,6 @@ export const AppLink: FC<AppLinkProps> = (props) => {
   } = props;
 
   return (
-    <Link {...props} href={href} className={classNames(className, "text-COLOR_8 dark:text-white dark:underline")} />
+    <Link {...props} href={href} className={classNames(className, "text-COLOR_8 hover:underline  dark:text-white dark:underline dark:hover:no-underline")} />
   );
 };

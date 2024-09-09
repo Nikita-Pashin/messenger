@@ -8,7 +8,7 @@ interface SignupBody {
 }
 
 const mutationFn = (body: SignupBody) => makeRequest({
-  url: 'api/auth/signup',
+  url: '/api/auth/signup',
   body,
   method: 'POST',
 });

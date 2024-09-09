@@ -24,10 +24,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
     },
   });
 
-  if (!user) {
-    return new Response('Пользователь не найден', {
-      status: 401,
-      statusText: 'Unauthorised'
+  if (!user || user.password !== data.password) {
+    return new Response('404 Not Found', {
+      status: 404,
+      statusText: '404 Not Found'
     })
   };
 
