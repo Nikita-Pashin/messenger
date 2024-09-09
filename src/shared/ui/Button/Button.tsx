@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import { ComponentProps, FC, MouseEvent, ReactNode } from 'react';
+import { ComponentProps, FC } from 'react';
 import { Button as BtnBase } from 'sparkles-ui-base';
-import s from './Button.module.scss';
+import s from '@/styles/Button.module.scss';
 
 type ButtonProps = ComponentProps<typeof BtnBase>;
 

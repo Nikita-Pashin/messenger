@@ -2,7 +2,7 @@
 
 import classNames from "classnames";
 import { ChangeEvent, FC, useState } from "react";
-import s from './input.module.scss';
+import s from '@/styles/Input.module.scss';
 
 interface InputProps {
   value: string;
