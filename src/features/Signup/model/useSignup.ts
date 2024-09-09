@@ -1,17 +1,18 @@
 import { makeRequest } from "@/shared/api/makeRequest";
 import { useMutation } from "@tanstack/react-query"
 
-interface LoginBody {
+interface SignupBody {
   login: string;
   password: string;
+  fullname: string;
 }
 
-const mutationFn = (body: LoginBody) => makeRequest({
-  url: 'api/auth/login',
+const mutationFn = (body: SignupBody) => makeRequest({
+  url: '/api/auth/signup',
   body,
   method: 'POST',
 });
 
-export const login = () => useMutation({
+export const useSignup = () => useMutation({
   mutationFn,
 });

@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import { login } from "../../model/login";
+import { useLogin } from "../../model/useLogin";
 import { Input } from "@/shared/ui/Input/Input";
 import classNames from "classnames";
 import { Button } from "@/shared/ui/Button/Button";
@@ -26,7 +26,7 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
   const [passwordMessage, setPasswordMessage] = useState('');
   const [formMessage, setFormMessage] = useState('');
   
-  const { mutate, isSuccess, isPending, error } = login();
+  const { mutate, isSuccess, isPending, error } = useLogin();
 
   const clearErrors = () => {
     setLoginMessage('');

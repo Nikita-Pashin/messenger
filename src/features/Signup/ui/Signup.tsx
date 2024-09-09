@@ -5,7 +5,7 @@ import { Input } from "@/shared/ui/Input/Input";
 import classNames from "classnames";
 import { redirect } from "next/navigation";
 import { ChangeEvent, FC, useEffect, useState } from "react";
-import { signup } from "../model/signup";
+import { useSignup } from "../model/useSignup";
 import { Dictionary } from "@/shared/i18n";
 import { AppLink } from "@/shared/ui/AppLink/AppLink";
 
@@ -28,7 +28,7 @@ export const Signup: FC<SignupProps> = (props) => {
   const [passwordMessage, setPasswordMessage] = useState('');
   const [formMessage, setFormMessage] = useState('');
 
-  const { mutate, isPending, isSuccess, error } = signup();
+  const { mutate, isPending, isSuccess, error } = useSignup();
 
   const onChangeLogin = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
     const re = /^[A-Za-z0-9]+$/;
