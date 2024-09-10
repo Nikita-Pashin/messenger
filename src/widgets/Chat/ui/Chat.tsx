@@ -1,6 +1,6 @@
 'use client';
 
-import { FC, useCallback, useMemo, useRef } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef } from "react";
 import { Message, useReadMessage } from "@/entities/Message";
 import classNames from "classnames";
 import { ChatInput } from "@/features/ChatInput";
@@ -26,7 +26,7 @@ export const Chat: FC<ChatProps> = (props) => {
   const chatRef = useRef<HTMLDivElement | null>(null);
   const isScrollToBottomRef = useRef<boolean>(false);
 
-  const { mutate, isPending } = useReadMessage();
+  const { mutate } = useReadMessage();
 
   const scrollToLastMessage = (element: HTMLDivElement | null) => {
     if (element) {
