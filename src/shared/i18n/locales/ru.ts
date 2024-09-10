@@ -1,4 +1,5 @@
 export const RU = {
+  "Search": "Поиск",
   'LoginForm.entry': 'Войти',
   'LoginForm.login': 'Логин',
   'LoginForm.password': 'Пароль',
@@ -12,4 +13,5 @@ export const RU = {
   'SignupForm.Fill in all fields': 'Заполните все поля',
   'Dialogs.Loading chats': 'Загрузка чатов',
   "Dialogs.You don't have any dialogues yet": "У вас пока нет диалогов",
+  'ListOfUsers.Loading users': 'Loading users',
 };

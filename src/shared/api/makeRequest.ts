@@ -18,12 +18,12 @@ export const makeRequest = <T extends any>(config: MakeRequestConfig) => {
     body: JSON.stringify(body),
     method,
   })
-  .then((response) => {
+  .then<T>((response) => {
     if (!response.ok) {
       throw new Error(response.statusText);
     }
 
-    return response.json() as T;
+    return response.json();
   })
   .catch((e: unknown): never => {
     console.error(e);

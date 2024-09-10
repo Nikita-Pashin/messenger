@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { Roboto } from "next/font/google";
 import { cookies } from 'next/headers';
 import "./globals.css";
@@ -24,9 +25,11 @@ export default function RootLayout({
       <body className={inter.className}>
         <CookiesProvider>
           <ReactQueryProvider>
-            <ThemeProvider defaultTheme={cookies().get('theme')?.value as Theme || 'light'}>
-              {children}
-            </ThemeProvider>
+            <AppRouterCacheProvider>
+              <ThemeProvider defaultTheme={cookies().get('theme')?.value as Theme || 'light'}>
+                {children}
+              </ThemeProvider>
+            </AppRouterCacheProvider>
           </ReactQueryProvider> 
         </CookiesProvider>
       </body>

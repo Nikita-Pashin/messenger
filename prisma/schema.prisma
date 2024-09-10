@@ -48,8 +48,15 @@ model Message {
   updatedAt DateTime? @updatedAt
 }
 
+enum TypeChat {
+  Private
+  Group
+}
+
 model Chat {
   id Int @id @default(autoincrement())
+
+  type TypeChat @default(Private)
 
   users User[]
   messages Message[]

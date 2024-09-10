@@ -1,4 +1,5 @@
 export const EN = {
+  "Search": "Search",
   'LoginForm.entry': 'LogIn',
   'LoginForm.login': 'Login',
   'LoginForm.password': 'Password',
@@ -12,4 +13,5 @@ export const EN = {
   'SignupForm.Fill in all fields': 'Fill in all fields',
   'Dialogs.Loading chats': 'Loading chats',
   "Dialogs.You don't have any dialogues yet": "You don't have any dialogues yet",
+  'ListOfUsers.Loading users': 'Loading users',
 };

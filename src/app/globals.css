@@ -26,6 +26,11 @@
   /* Firefox */
   * {
     scrollbar-width: thin;
+    scrollbar-color: rgb(196,201,204) #ffffff;
+  }
+
+  .dark * {
+    scrollbar-width: thin;
     scrollbar-color: #4f4f4f #212121;
   }
 

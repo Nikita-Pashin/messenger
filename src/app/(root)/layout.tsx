@@ -1,5 +1,7 @@
+import { FindUserInput } from "@/features/FindUserInput";
 import { getDictionary } from "@/shared/i18n";
 import { Dialogs } from "@/widgets/Dialogs";
+import { Sidebar } from "@/widgets/Sidebar";
 
 export default async function Layout({
   children,
@@ -9,13 +11,11 @@ export default async function Layout({
   const d = getDictionary();
 
   return (
-    <div className="flex">
-      <div className="basis-80">
-        <Dialogs className="h-screen overflow-x-auto" d={d} />
-      </div>
+    <div className="flex h-screen">
+      <Sidebar d={d} />
       <div className="flex-grow">
         {children}
       </div>
     </div>
-  )
-}
+  );
+};

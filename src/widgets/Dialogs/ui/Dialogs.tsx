@@ -21,13 +21,13 @@ export const Dialogs: FC<DialogsProps> = (props) => {
   const { data: dialogs, isLoading } = useDialogs();
 
   return (
-    <div className={classNames("dark:bg-COLOR_1 bg-white pt-2 pb-2 pl-2", className)}>
+    <div className={classNames("dark:bg-COLOR_1 bg-white", className)}>
       {isLoading && (
         <div className="bold text-center text-xl text-black dark:text-white mt-2">{d['Dialogs.Loading chats']}...</div>
       )}
 
       {!isLoading && dialogs && !dialogs.length && (
-        <div className="bold text-center text-xl text-black dark:text-white mt-2">{d['Dialogs.Loading chats']}...</div>
+        <div className="bold text-center text-xl text-black dark:text-white mt-2">{d["Dialogs.You don't have any dialogues yet"]}...</div>
       )}
 
       {!isLoading && dialogs && dialogs.map(({

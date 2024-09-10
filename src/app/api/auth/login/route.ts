@@ -46,7 +46,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   };
 
   const result = {
-    access_token: await jwt.sign(payload, 'secret', { expiresIn: '10m' }),
+    access_token: await jwt.sign(payload, 'secret', { expiresIn: '1h' }),
   };
 
   return NextResponse.json(null, {
