@@ -7,6 +7,7 @@ export interface DialogComponentProps {
   lastMessage: string;
   lastMessageTime: string;
   countUnreadMessages: number;
+  isActive?: boolean;
 }
 
 // type useDialogsParams = {

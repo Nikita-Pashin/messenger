@@ -31,6 +31,7 @@ const config: Config = {
       'COLOR_15': '#e53935',
       'COLOR_16': '#f4f4f5',
       'COLOR_17': '#dbdbdb',
+      'COLOR_18': '#EEFFDE',
       transparent: 'transparent',
       current: 'currentColor',
       'white': '#ffffff',

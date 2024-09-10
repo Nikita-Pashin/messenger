@@ -1,7 +1,7 @@
 'use client';
 
-import { FC, useMemo, useRef } from "react";
-import { Message } from "@/entities/Message";
+import { FC, useCallback, useMemo, useRef } from "react";
+import { Message, useReadMessage } from "@/entities/Message";
 import classNames from "classnames";
 import { ChatInput } from "@/features/ChatInput";
 import { useMessages } from "@/entities/Message/hooks/useMessages";
@@ -24,6 +24,9 @@ export const Chat: FC<ChatProps> = (props) => {
   const { data, isLoading } = useMessages({ chatId });
   const profile = useProfile();
   const chatRef = useRef<HTMLDivElement | null>(null);
+  const isScrollToBottomRef = useRef<boolean>(false);
+
+  const { mutate, isPending } = useReadMessage();
 
   const scrollToLastMessage = (element: HTMLDivElement | null) => {
     if (element) {
@@ -46,47 +49,59 @@ export const Chat: FC<ChatProps> = (props) => {
 
     return obj;
   }, [data?.users]);
-  
-  if (isLoading || !data || profile.isLoading || !profile.data) {
-    return (
-      <div>Loading...</div>
-    );
-  }
+
+  const showLoading = isLoading || !data || profile.isLoading || !profile.data;
+
+  const onInViewPort = useCallback((messageId: number) => {
+    mutate({ id: messageId });
+  }, []);
 
   return (
     <DefaultBackground>
-      <div className={classNames("pl-4 pr-4", className)}>
-        <div>
-          {data.messages.map(({
-            text, isReaded, from
-          }, i) => {
-            const currentUser = usersMap[from];
-            const isMine = profile.data.id === from;
+      {showLoading && (
+        <div className="h-screen text-black p-6 text-2xl">Loading chat...</div>
+      )}
 
-            return (
-              <div className={`flex pt-1 ${isMine ? 'justify-end' : 'justify-start'}`} key={i}>
-                <Message
-                  isMine={isMine}
-                  status={isReaded ? 'readed' : 'delivered'}
-                  text={text}
-                  time={'12:00'}
-                  userName={currentUser.fullName}
-                  userEmojiAvatar={currentUser.avatarEmoji}
-                />
-              </div>
-            )
-          })}
+      {!showLoading && (
+        <div className={classNames("pl-4 pr-4", className)}>
+          <div>
+            {data.messages.map(({
+              text, isReaded, from, id
+            }, i) => {
+              const currentUser = usersMap[from];
+              const isMine = profile.data.id === from;
 
-          <div ref={(e) => {
-            chatRef.current = e;
-            scrollToLastMessage(e);
-          }} />
+              return (
+                <div className={`flex pt-1 ${isMine ? 'justify-end' : 'justify-start'}`} key={id}>
+                  <Message
+                    id={id}
+                    isMine={isMine}
+                    status={isReaded ? 'readed' : 'delivered'}
+                    text={text}
+                    time={'12:00'}
+                    userName={currentUser.fullName}
+                    userEmojiAvatar={currentUser.avatarEmoji}
+                    onInViewPort={onInViewPort}
+                  />
+                </div>
+              )
+            })}
+
+            <div ref={(e) => {
+              chatRef.current = e;
+
+              if (!isScrollToBottomRef.current) {
+                scrollToLastMessage(e);
+                isScrollToBottomRef.current = true;
+              }
+            }} />
+          </div>
+
+          <div className="relative">
+            <ChatInput onSendMessage={onSendMessage} chatId={chatId} className="fixed w-80 bottom-4 right-4" />
+          </div>
         </div>
-
-        <div className="relative">
-          <ChatInput onSendMessage={onSendMessage} chatId={chatId} className="fixed w-80 bottom-4 right-4" />
-        </div>
-      </div>
+      )}
     </DefaultBackground>
   );
 };

@@ -59,12 +59,12 @@ export const ChatInput: FC<ChatInputProps> = ({ className, chatId, onSendMessage
   return (
     <input
       type="text"
-      className={classNames("bg-COLOR_2 text-white p-2 rounded-xl", className)}
+      className={classNames("bg-white text-black p-2 rounded-xl", className)}
       onFocus={onFocus}
       onBlur={onBlur}
       value={value}
       onChange={onChange}
-      style={{ width: 'calc(100% - (256px + 16px + 16px))' }}
+      style={{ width: 'calc(100% - (350px))' }}
     />
   );
 };

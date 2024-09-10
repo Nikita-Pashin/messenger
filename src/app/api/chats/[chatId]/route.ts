@@ -9,8 +9,12 @@ const getChat = (chatId: number, userId: number) => {
     },
     include: {
       users: {},
-      messages: {},
-    }
+      messages: {
+        orderBy: {
+          createdAt: 'asc',
+        }
+      },
+    },
   })
 }
 

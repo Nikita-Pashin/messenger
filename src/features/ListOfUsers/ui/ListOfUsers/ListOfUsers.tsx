@@ -1,7 +1,7 @@
 import { UserIcon } from "@/shared/ui/UserIcon";
 import { useUsers } from "../../model/useUsers/useUsers";
 import { Dictionary } from "@/shared/i18n";
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { Modal } from '@mui/material'
 import { Input } from "@/shared/ui/Input/Input";
 import { Button } from "@/shared/ui/Button/Button";
@@ -19,11 +19,19 @@ export const ListOfUsers: FC<ListOfUsersProps> = (props) => {
   } = props;
 
   const { data, isLoading } = useUsers();
-  const { mutate } = useSendMessages();
+  const { mutate, data: sendData, isSuccess } = useSendMessages();
 
   const [currentUser, setCurrentUser] = useState<null | any>(null);
   const [value, setValue] = useState('');
   const [open, isOpen] = useState(false);
+
+  useEffect(() => {
+    if (isSuccess) {
+      isOpen(false);
+      // @ts-ignore
+      redirect(`/${sendData.newMessage.chatId}`);
+    }
+  }, [isSuccess]);
 
   const onClick = (user: any) => {
     setCurrentUser(user);

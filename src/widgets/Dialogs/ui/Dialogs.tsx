@@ -1,6 +1,6 @@
 'use client'
 
-import { ComponentProps, FC } from "react";
+import { ComponentProps, FC, useState } from "react";
 import classNames from "classnames";
 import { Dialog, useDialogs } from "@/entities/Dialog";
 import { Dictionary } from "@/shared/i18n";
@@ -18,7 +18,11 @@ export const Dialogs: FC<DialogsProps> = (props) => {
     d,
   } = props;
 
+  const isSSR = typeof window === 'undefined';
+  const defaultActiveDialog = isSSR ? null : Number(new URL(window.location.href).pathname.split('/')[1]);
+
   const { data: dialogs, isLoading } = useDialogs();
+  const [activeDialog, setActiveDialog] = useState<null | number>(defaultActiveDialog);
 
   return (
     <div className={classNames("dark:bg-COLOR_1 bg-white", className)}>
@@ -37,7 +41,7 @@ export const Dialogs: FC<DialogsProps> = (props) => {
         const countUnreadMessages = messages.filter((el) => !el.isReaded).length;
 
         return (
-          <div key={id}>
+          <div key={id} onClick={() => setActiveDialog(id)}>
             <Dialog
               userId={String(id)}
               userName={fullName}
@@ -45,6 +49,7 @@ export const Dialogs: FC<DialogsProps> = (props) => {
               countUnreadMessages={countUnreadMessages}
               lastMessage={currentMessage?.text || ''}
               lastMessageTime={'12:00'}
+              isActive={activeDialog === id}
             />
           </div>
         )
